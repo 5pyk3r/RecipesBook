@@ -1,0 +1,25 @@
+<div class="content">
+  <div class="actions-buttons">
+    <mat-button-toggle-group #group="matButtonToggleGroup" name="foodType" value="ALL" (change)="filterRecipeOption(group.value)">
+      <mat-button-toggle class="button"  value="ALL" >All</mat-button-toggle>
+      <mat-button-toggle class="button" value="BREAKFAST">Breakfast</mat-button-toggle>
+      <mat-button-toggle class="button" value="DINNER">Dinner</mat-button-toggle>
+      <mat-button-toggle class="button" value="SUPPER">Supper</mat-button-toggle>
+    </mat-button-toggle-group>
+    <button class="mat-raised-button add-button" (click)="openRecipeDialog()"><div class="addIcon"><mat-icon svgIcon="addIcon"></mat-icon></div>Add Recipe</button>
+</div>
+  <div class="cards-content" fxLayout="row wrap" fxLayoutGap="1rem grid">
+
+    <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let recipe of dataSource" >
+      <mat-card class="mat-elevation-z4">
+        <img mat-card-image src="/assets/pizza.jpg"/>
+        <mat-card-content>
+          <p>{{recipe.name}} </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>details</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

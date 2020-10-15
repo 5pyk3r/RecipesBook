@@ -1,0 +1,12 @@
+.recipe-dialog{
+  height: 700px;
+  width: 500px;
+}
+.mat-form-field{
+  width: 100%;
+}
+.mat-dialog-title{
+  font-size: large;
+  font-weight: 500;
+  padding: 15px;
+}

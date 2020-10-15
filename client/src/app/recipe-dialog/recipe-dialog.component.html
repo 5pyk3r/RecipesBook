@@ -1,0 +1,45 @@
+
+<form [formGroup]="recipeForm" >
+  <div class="recipe-dialog">
+  <mat-dialog-content>
+
+    <mat-dialog-title color="primary">
+      Dodaj przepis
+    </mat-dialog-title>
+    <mat-divider></mat-divider>
+    <div fxLayout="column">
+      <mat-form-field>
+        <input
+              autocomplete="off"
+               matInput
+               formControlName="name"
+               placeholder="Name"/>
+      </mat-form-field>
+      <mat-form-field>
+         <mat-select [(value)]="selectedMealType" placeholder="Choose meal type" formControlName="mealType">
+          <mat-option *ngFor="let meal of mealsValues(mealTypes)" [value]="meal">
+            {{meal}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <textarea matInput
+                  autocomplete="off"
+                  matInputW
+                  formControlName="description"
+                  placeholder="Description"></textarea>
+      </mat-form-field>
+    </div>
+        <app-chips-input  (ingredients2)="getIngredients($event)"></app-chips-input>
+
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button class="mat-raised-button" (click)="close()">Close</button>
+    <button class="mat-raised-button mat-primary" (click)="save()">Save</button>
+  </mat-dialog-actions>
+  </div>
+</form>
+
+
+
+

@@ -1,0 +1,42 @@
+<div class="main-container">
+  <h2>Lista przepisów</h2>
+  <mat-divider></mat-divider>
+
+  <button mat-raised-button color="primary" (click)="openRecipeDialog()">Add recipe</button>
+  <br><br>
+  <mat-table matSort [dataSource]="dataSource">
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="type">
+    <mat-header-cell *matHeaderCellDef>Type</mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.mealType}} </mat-cell>
+  </ng-container>
+
+    <ng container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+      <mat-cell *matCellDef="let row"><button mat-raised-button color="danger" (click)="editRecipe(row)">Edit</button>
+        <button mat-raised-button color="danger" (click)="deleteRecipeById(row.id)">Usun</button>
+
+      </mat-cell>
+    </ng>
+
+<!--    <ng container matColumnDef="delete">-->
+<!--      <mat-header-cell *matHeaderCellDef>Usuwanie</mat-header-cell>-->
+<!--      <mat-cell *matCellDef="let row">-->
+<!--      </mat-cell>-->
+<!--    </ng>-->
+
+    <mat-header-row *matHeaderRowDef="['id', 'name', 'type', 'actions']"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: ['id', 'name', 'type', 'actions']"></mat-row>
+  </mat-table>
+
+</div>
+

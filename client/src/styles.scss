@@ -1,0 +1,36 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+mat-dialog-title{
+  font-size: x-large;
+  font-weight: 500;
+  padding-bottom: 10px;
+}
+.mat-divider{
+  border-top-color: black;
+  border-top-width: 4px;
+  padding: 10px;
+}
+.violet{
+  background-color: #9965f4;
+}
+.orange{
+  background-color: #ee9b02;
+}
+.mat-toolbar{
+  background-color: white;
+}
+.content{
+  background-color: #f5f5f5;
+  padding: 4% 8%;
+  height: 100%;
+}
+.mat-raised-button{
+  transform: none !important;
+}
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
