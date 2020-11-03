@@ -1,4 +1,4 @@
-import {Component,  EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {Ingredient} from '../data/ingredient';
@@ -8,7 +8,7 @@ import {Ingredient} from '../data/ingredient';
   templateUrl: './chips-input.component.html',
   styleUrls: ['./chips-input.component.css']
 })
-export class ChipsInputComponent{
+export class ChipsInputComponent implements OnInit{
 
   selectable = true;
   removable = true;
@@ -16,11 +16,18 @@ export class ChipsInputComponent{
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   @Output()
-  ingredients2 = new EventEmitter<Ingredient[]>();
+  recipeIngredients = new EventEmitter<Ingredient[]>();
+
+  @Input()
+  setIngredients: Ingredient[] = [];
 
   ingredients: Ingredient[] = [];
 
-
+  ngOnInit(): void {
+    if(this.setIngredients != null){
+      this.ingredients = this.setIngredients;
+    }
+  }
 
   add(event: MatChipInputEvent): void {
     const input = event.input;
@@ -28,7 +35,7 @@ export class ChipsInputComponent{
 
     if ((value || '').trim()) {
       this.ingredients.push({name: value.trim()});
-      this.ingredients2.emit(this.ingredients);
+      this.recipeIngredients.emit(this.ingredients);
     }
 
     if (input) {
@@ -41,6 +48,7 @@ export class ChipsInputComponent{
     if (index >= 0) {
       this.ingredients.splice(index, 1);
     }
+    this.recipeIngredients.emit(this.ingredients);
   }
 
 }

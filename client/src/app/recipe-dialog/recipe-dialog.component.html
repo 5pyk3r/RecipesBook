@@ -4,10 +4,15 @@
   <mat-dialog-content>
 
     <mat-dialog-title color="primary">
-      Dodaj przepis
+      Add recipe
     </mat-dialog-title>
     <mat-divider></mat-divider>
     <div fxLayout="column">
+
+      <div *ngIf="alreadyExists == true" class="alert alert-danger">
+        Name already exists.
+      </div>
+
       <mat-form-field>
         <input
               autocomplete="off"
@@ -25,17 +30,39 @@
       <mat-form-field>
         <textarea matInput
                   autocomplete="off"
-                  matInputW
+                  matInput
                   formControlName="description"
-                  placeholder="Description"></textarea>
+                  placeholder="Description"
+                  cdkTextareaAutosize
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="5"></textarea>
       </mat-form-field>
     </div>
-        <app-chips-input  (ingredients2)="getIngredients($event)"></app-chips-input>
+    <app-chips-input [setIngredients]="this.recipe?.ingredients" (recipeIngredients)="getIngredients($event)"></app-chips-input>
+
+    <div class="uploadContainer">
+    <mat-button mat-icon-button (click)="fileInput.click()">
+      <div class="sendFile"><mat-icon svgIcon="send"></mat-icon></div>
+      <input  #fileInput type="file" accept="image/png,image/jpeg" (change)="selectFile($event)" style="display:none;">
+    </mat-button>
+
+    <mat-form-field>
+      <input
+        autocomplete="off"
+        matInput
+        formControlName="fileName"
+        placeholder="Upload an image of recipe"
+        value="{{currentFileUpload?.name}}"
+        readonly
+      />
+    </mat-form-field>
+    </div>
 
   </mat-dialog-content>
-  <mat-dialog-actions>
-    <button class="mat-raised-button" (click)="close()">Close</button>
-    <button class="mat-raised-button mat-primary" (click)="save()">Save</button>
+
+    <mat-dialog-actions>
+      <button mat-raised-button (click)="close()">Close</button>
+      <button mat-raised-button class="saveButton" (click)="save()">Save</button>
   </mat-dialog-actions>
   </div>
 </form>

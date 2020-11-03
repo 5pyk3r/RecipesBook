@@ -18,5 +18,21 @@ export class AppComponent {
       'addIcon',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/add_icon.svg')
     );
+    this.matIconRegistry.addSvgIcon(
+      'send',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/send.svg')
+    );
+    this.matIconRegistry.addSvgIcon(
+      'backArrow',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/arrow-left.svg')
+    );
+    this.matIconRegistry.addSvgIcon(
+      'edit',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/edit.svg')
+    );
+    this.matIconRegistry.addSvgIcon(
+      'delete',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/delete.svg')
+    );
   }
 }

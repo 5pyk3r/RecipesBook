@@ -23,8 +23,11 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatTabsModule} from '@angular/material/tabs';
 import { RecipeCardsComponent } from './recipe-cards/recipe-cards.component';
 import {MatCardModule} from '@angular/material/card';
-import {FlexModule} from '@angular/flex-layout';
+import {ExtendedModule, FlexModule, GridModule} from '@angular/flex-layout';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
+import {RouterModule} from '@angular/router';
+import {AppRoutingModule} from './app-routing/app-routing.module';
 
 
 @NgModule({
@@ -34,7 +37,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     RecipeListComponent,
     RecipeDialogComponent,
     ChipsInputComponent,
-    RecipeCardsComponent
+    RecipeCardsComponent,
+    RecipeDetailsComponent
   ],
   schemas: [NO_ERRORS_SCHEMA],
   imports: [
@@ -57,7 +61,12 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatTabsModule,
     MatCardModule,
     FlexModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    RouterModule,
+    RouterModule.forRoot([]),
+    AppRoutingModule,
+    ExtendedModule,
+    GridModule
   ],
   providers: [{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}],
   bootstrap: [AppComponent]

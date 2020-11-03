@@ -1,9 +1,8 @@
-import { Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Recipe} from '../data/recipe';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {RecipesService} from '../services/recipes.service';
-import {HttpErrorResponse} from '@angular/common/http';
 import {Meal} from '../data/enums/meal.enum';
 import {Ingredient} from '../data/ingredient';
 
@@ -19,8 +18,9 @@ export class RecipeDialogComponent implements OnInit {
   selectedMealType: Meal;
   mealsValues = Object.keys;
   mealTypes: typeof Meal = Meal;
-
-  ingredients: Ingredient[] = [];
+  currentFileUpload: File;
+  recipeIngredients: Ingredient[] = [];
+  alreadyExists: boolean;
 
   constructor(private dialogRef: MatDialogRef<RecipeDialogComponent>,
               @Inject(MAT_DIALOG_DATA) private data: any,
@@ -30,59 +30,70 @@ export class RecipeDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.recipeForm = new FormGroup({
-      name: new FormControl('', [Validators.required]),
+      name: new FormControl('', [Validators.required, Validators.minLength(4)]),
       description: new FormControl('', [Validators.required]),
-      mealType: new FormControl('', [Validators.required])
+      mealType: new FormControl('', [Validators.required]),
+      fileName: new FormControl('',[Validators.required])
     });
-    this.recipeForm.get('name');
-    // this.recipeForm.get('description').setValue(this.recipe?.description);
-    // this.recipeForm.get('mealType').setValue(this.recipe?.mealType);
-    // this.recipeForm.get('ingredients').setValue(this.recipe?.ingredients);
+
+    this.recipeForm.get('name').setValue(this.recipe?.name);
+    this.recipeForm.get('description').setValue(this.recipe?.description);
+    this.recipeForm.get('mealType').setValue(this.recipe?.mealType);
+    this.recipeForm.get('fileName').setValue(this.recipe?.fileName);
   }
 
-  // getEnumKeyByEnumValue(myEnum, enumValue) {
-  //   let keys = Object.keys(myEnum).filter(x => myEnum[x] === enumValue);
-  //   return keys.length > 0 ? keys[0] : null;
-  // }
-
-  getIngredients(ingredients2){
-    this.ingredients = ingredients2;
+  getIngredients(ingredients){
+    this.recipeIngredients = ingredients;
   }
 
   close(){
     this.dialogRef.close();
   }
+  selectFile(file){
+    this.currentFileUpload = file.target.files[0];
+  }
 
   save() {
-    const recipe = new Recipe();
+    const formData = new FormData();
 
-    recipe.name = this.recipeForm.controls.name.value;
-    recipe.description = this.recipeForm.controls.description.value;
-    recipe.mealType = this.recipeForm.controls.mealType.value;
-    recipe.ingredients = this.ingredients;
+    const recipe: any = {
+      id: this.recipe?.id,
+      name : this.recipeForm.controls.name.value,
+      description: this.recipeForm.controls.description.value,
+      mealType: this.recipeForm.controls.mealType.value,
+      ingredients: this?.recipeIngredients,
+      fileName: this.currentFileUpload?.name
+    };
+
+    if (this.recipe != null && this.currentFileUpload == null){
+      recipe.fileName = this.recipe.fileName;
+    }
+
+    formData.append('recipe', JSON.stringify(recipe));
+
+    if (this.currentFileUpload != null){
+      formData.append('file', this.currentFileUpload, this.currentFileUpload.name);
+    }
 
     if (this.recipe === undefined){
       this.recipeService.findRecipeByName(recipe.name).subscribe(isExist => {
-      if (isExist === false) {
-        this.recipeService.postRecipe(recipe).subscribe(response => {
+      if (isExist === false && this.currentFileUpload != null) {
+        this.recipeService.postRecipe(formData).subscribe(response => {
           this.dialogRef.close(response);
-        }, (error: HttpErrorResponse) => {
-          console.log(error.message + ' error:');
+          this.recipeService.findAllRecipes();
         });
+        this.dialogRef.close();
       }
       else{
-        //////
-        console.log("There is recipe, already exists");
+        this.alreadyExists = true;
       }
     });
     } else{
+
       recipe.id = this.recipe.id;
 
-      this.recipeService.updateRecipeById(this.recipe.id, recipe).subscribe(response =>
+      this.recipeService.updateRecipeById(this.recipe.id, formData).subscribe(response =>
         this.dialogRef.close(response));
     }
-    // this.dialogRef.close();
-
   }
-
 }

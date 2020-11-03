@@ -3,32 +3,39 @@ import {HttpClient} from '@angular/common/http';
 import {Recipe} from '../data/recipe';
 import {Observable} from 'rxjs';
 
+const URL = '/recipes';
+
 @Injectable({
   providedIn: 'root'
 })
 export class RecipesService {
 
-  private url = 'http://localhost:8080';
+  // TODO, change query params(?mealType=) as a some const or static value sth like: { queryParams: params }
 
   constructor(private http: HttpClient) { }
 
-  postRecipe(recipe: Recipe){
-    return this.http.post(this.url + '/recipe', recipe);
+  postRecipe(recipe: FormData): Observable<any> {
+    return this.http.post(URL, recipe);
   }
   findRecipeByMealType(type): Observable<Recipe[]>{
-    return this.http.get<Recipe[]>(this.url + `/recipes/${type}`);
+    // TODO
+    return this.http.get<Recipe[]>(URL + `?mealType=${type}`);
   }
   findRecipeByName(name): Observable<boolean> {
-    return this.http.get<boolean>(this.url + `/recipe/${name}`);
+    // TODO
+    return this.http.get<boolean>( URL + `?name=${name}`);
+  }
+  findRecipeById(id): Observable<Recipe> {
+    // TODO
+    return this.http.get<Recipe>( URL + `?id=${id}`);
   }
   findAllRecipes(): Observable<Recipe[]>{
-    return this.http.get<Recipe[]>(this.url + '/recipes');
+    return this.http.get<Recipe[]>(URL);
   }
-  updateRecipeById(id, recipe){
-    return this.http.put(this.url + `/recipe/${id}`, recipe);
+  updateRecipeById(id, recipe: FormData): Observable<any>{
+    return this.http.put(URL + `/${id}`, recipe);
   }
-
-  deleteById(id){
-    return this.http.delete(this.url + `/recipe/${id}`);
+  deleteById(id): Observable<any>{
+    return this.http.delete(URL + `/${id}`);
   }
 }

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RecipeDialogComponent} from '../recipe-dialog/recipe-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {RecipesService} from '../services/recipes.service';
@@ -40,5 +40,9 @@ export class RecipeCardsComponent implements OnInit {
 
   getAllRecipes(){
     this.recipeService.findAllRecipes().subscribe(data => this.dataSource = data);
+  }
+
+  deleteRecipeById(id: number){
+    this.recipeService.deleteById(id).subscribe(response => this.getAllRecipes());
   }
 }

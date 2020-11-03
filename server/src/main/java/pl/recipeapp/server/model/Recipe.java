@@ -24,9 +24,11 @@ public class Recipe {
     private Long id;
 
     @NotNull
+    @Column(unique = true)
     private String name;
 
     @NotNull
+    @Column(length = 1000)
     private String description;
 
     @Enumerated(EnumType.STRING)
@@ -35,5 +37,8 @@ public class Recipe {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
     @JsonManagedReference
     private List<Ingredient> ingredients = new ArrayList<>();
+
+    @NotNull
+    private String fileName;
 
 }

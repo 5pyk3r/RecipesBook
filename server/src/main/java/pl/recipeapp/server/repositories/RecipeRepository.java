@@ -13,4 +13,5 @@ public interface RecipeRepository extends CrudRepository<Recipe, Long> {
 
     Iterable<Recipe> findAllByMealType(MealType mealType);
 
+    Recipe findRecipeById(Long id);
 }

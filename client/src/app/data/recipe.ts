@@ -8,4 +8,5 @@ export class Recipe {
   mealType: Meal = undefined;
   description: string = undefined;
   ingredients: Ingredient[];
+  fileName: string;
 }

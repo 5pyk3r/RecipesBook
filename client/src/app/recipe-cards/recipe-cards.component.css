@@ -15,11 +15,12 @@
   color: #9965f4;
   background-color: transparent;
   box-shadow: none;
-  padding: 0;
   border: none;
   display: inline;
   justify-content: center;
   line-height: 3;
+  outline:none;
+  padding-right: 6px;
 }
 .addIcon{
   padding: 6px;
@@ -28,17 +29,6 @@
   display: inline;
   float: left;
 }
-/*.recipe-actions-button{*/
-/*  background-color:  #9965f4;*/
-/*  margin-right: 1rem !important;*/
-/*  color: white;*/
-/*}*/
-/*.not-clicked-button{*/
-/*  background-color: transparent;*/
-/*  margin-bottom: 10px !important;*/
-/*  box-shadow: none;*/
-/*  margin-right: 1rem !important;*/
-/*}*/
 .button {
   padding: 0 16px;
   border-radius: 4px;
@@ -57,6 +47,13 @@
   margin-right: 1rem;
   color: white;
 }
+.mat-card-image{
+  height: 15vh;
+}
+.mat-card-content{
+  height: 10vh;
+}
+
 @media (max-width: 750px) {
   .add-button {
     justify-content: center;
@@ -65,10 +62,18 @@
   .mat-button-toggle{
     margin-bottom: 10px !important;
   }
-  .content{
-    padding: 0 !important;
-  }
   .cards-content{
     margin-top: 50px !important;
   }
+  .mat-card-image{
+    height: 25vh;
+  }
+  .button{
+    padding: 0;
+  }
+  .actions-buttons{
+    padding: 0;
+  }
 }
+
+
